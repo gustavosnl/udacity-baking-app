@@ -1,11 +1,11 @@
-package br.com.glima.popularmovies.view;
+package br.com.glima.bakingapp.view;
 
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import br.com.glima.popularmovies.R;
+import br.com.glima.bakingapp.R;
 
 /**
  * Created by gustavo.lima on 22/01/18.
