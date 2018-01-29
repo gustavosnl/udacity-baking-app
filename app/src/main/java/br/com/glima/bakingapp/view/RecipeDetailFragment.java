@@ -51,7 +51,7 @@ public class RecipeDetailFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		Recipe recipe = getArguments().getParcelable(ARGUMENT_RECIPE);
 		ingredients.setAdapter(new IngredientsAdapter(recipe.getIngredients()));
-		steps.setAdapter(new StepsAdapter(recipe.getSteps()));
+		steps.setAdapter(new StepsAdapter(recipe.getSteps(), (StepClickedCallback) getContext()));
 		steps.addItemDecoration(new DividerItemDecoration(getContext()));
 	}
 }

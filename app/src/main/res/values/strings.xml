@@ -2,6 +2,7 @@
     <string name="app_name">Baking App</string>
     <string name="ingredients_label">ingredients</string>
     <string name="steps_label">Steps</string>
+    <string name="instructions_label">Instructions</string>
 
     <plurals name="formatted_measure">
         <item quantity="one">%1$.1f %2$s</item>

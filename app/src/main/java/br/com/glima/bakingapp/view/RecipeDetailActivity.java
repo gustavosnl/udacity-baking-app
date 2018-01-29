@@ -17,8 +17,10 @@ import br.com.glima.bakingapp.business.Step;
 
 public class RecipeDetailActivity extends AppCompatActivity implements StepClickedCallback {
 
+	private static final String TAG = "fragment_recipe_detail";
 	private RecipeDetailFragment recipeDetailFragment;
 	private StepDetailFragment stepDetailFragment;
+	private int mCurrentStepIndex;
 
 	public static final String RECIPE_INTENT_EXTRA = "recipe_intent_extra";
 
@@ -39,20 +41,30 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepClick
 
 		recipeDetailFragment.setRecipe((Recipe) getIntent().getParcelableExtra(RECIPE_INTENT_EXTRA));
 
-
 		getSupportFragmentManager().beginTransaction()
-				.add(R.id.fragment_container, recipeDetailFragment)
+				.add(R.id.fragment_container, recipeDetailFragment, TAG)
+				.addToBackStack(TAG)
 				.commit();
-
 	}
 
 	@Override
 	public void onStepClicked(Step step) {
+		mCurrentStepIndex = Integer.valueOf(step.getId());
 		stepDetailFragment.setStep(step);
 
 		getSupportFragmentManager().beginTransaction()
 				.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-				.replace(R.id.fragment_container, recipeDetailFragment)
+				.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right,
+						android.R.anim.slide_out_right, android.R.anim.slide_in_left)
+				.addToBackStack(step.getId())
+				.replace(R.id.fragment_container, stepDetailFragment)
 				.commit();
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+
+		onStepClicked();
 	}
 }

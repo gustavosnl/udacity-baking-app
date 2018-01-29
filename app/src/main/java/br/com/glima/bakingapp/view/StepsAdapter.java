@@ -1,6 +1,7 @@
 package br.com.glima.bakingapp.view;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -20,8 +21,10 @@ import static android.view.LayoutInflater.from;
 class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepViewHolder> {
 
 	private List<Step> steps = new ArrayList<>();
+	private final StepClickedCallback callback;
 
-	public StepsAdapter(List<Step> steps) {
+	public StepsAdapter(List<Step> steps, StepClickedCallback callback) {
+		this.callback = callback;
 		this.steps.addAll(steps);
 	}
 
@@ -42,16 +45,21 @@ class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepViewHolder> {
 	}
 
 
-	class StepViewHolder extends RecyclerView.ViewHolder {
+	class StepViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 		private StepItemBinding binding;
 
 		public StepViewHolder(StepItemBinding binding) {
 			super(binding.getRoot());
 			this.binding = binding;
+			itemView.setOnClickListener(this);
 		}
 
 		public void setStep(Step step) {
 			binding.setStep(step);
+		}
+		@Override
+		public void onClick(View view) {
+			callback.onStepClicked(binding.getStep());
 		}
 	}
 }
