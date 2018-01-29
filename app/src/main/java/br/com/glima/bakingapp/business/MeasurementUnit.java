@@ -4,19 +4,23 @@ package br.com.glima.bakingapp.business;
  * Created by gustavo.lima on 27/01/18.
  */
 
-enum MeasurementUnit {
+public enum MeasurementUnit {
 
-	CUP("CUP"),
-	TABLE_SPOON("TBLSP"),
-	TEA_SPOON("TSP"),
-	GRAMS("G"),
-	KILOGRAMS("K"),
-	OUNCE("OZ"),
-	UNIT("UNIT");
+	CUP("Cup"),
+	TBLSP("Table Spoon"),
+	TSP("Tea Spoon"),
+	G("Gram"),
+	K("Kilogram"),
+	OZ("Oz"),
+	UNIT("Unit");
 
 	private String measurement;
 
 	MeasurementUnit(String measurement) {
 		this.measurement = measurement;
+	}
+
+	public String getMeasurement() {
+		return measurement;
 	}
 }

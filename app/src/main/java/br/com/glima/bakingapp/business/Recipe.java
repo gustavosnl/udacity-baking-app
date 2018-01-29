@@ -21,6 +21,8 @@ public class Recipe implements Parcelable {
 	protected Recipe(Parcel in) {
 		id = in.readString();
 		name = in.readString();
+		ingredients = in.createTypedArrayList(Ingredient.CREATOR);
+		steps = in.createTypedArrayList(Step.CREATOR);
 		servings = in.readString();
 		image = in.readString();
 	}
@@ -28,6 +30,8 @@ public class Recipe implements Parcelable {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(id);
 		dest.writeString(name);
+		dest.writeTypedList(ingredients);
+		dest.writeTypedList(steps);
 		dest.writeString(servings);
 		dest.writeString(image);
 	}
