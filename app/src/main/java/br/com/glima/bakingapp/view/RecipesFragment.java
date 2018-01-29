@@ -13,12 +13,16 @@ import java.util.List;
 
 import br.com.glima.bakingapp.R;
 import br.com.glima.bakingapp.business.Recipe;
+import br.com.glima.bakingapp.network.RecipesClient;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by gustavo.lima on 27/01/18.
  */
 
-public class RecipesFragment extends Fragment {
+public class RecipesFragment extends Fragment implements Observer<List<Recipe>> {
+	private RecipesClient client;
 
 	private RecyclerView recyclerView;
 	public RecipesFragment() {
@@ -31,10 +35,36 @@ public class RecipesFragment extends Fragment {
 		recyclerView = rootView.findViewById(R.id.recipes_list);
 		recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
 		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+		client = new RecipesClient();
+
 		return rootView;
 	}
 
-	public void setRecipes(List<Recipe> recipeList) {
-		recyclerView.setAdapter(new RecipesAdapter(recipeList, (RecipeClickedCallback) getActivity()));
+	@Override
+	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		client.fetchRecipes().subscribe(this);
+
+	}
+
+	@Override
+	public void onSubscribe(Disposable d) {
+
+	}
+
+	@Override
+	public void onNext(List<Recipe> recipes) {
+		recyclerView.setAdapter(new RecipesAdapter(recipes, (RecipeClickedCallback) getActivity()));
+	}
+
+	@Override
+	public void onError(Throwable e) {
+
+	}
+
+	@Override
+	public void onComplete() {
+
 	}
 }
