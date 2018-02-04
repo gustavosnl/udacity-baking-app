@@ -6,7 +6,7 @@ import br.com.glima.bakingapp.business.Recipe;
  * Created by gustavo.lima on 27/01/18.
  */
 
-interface RecipeClickedCallback {
+public interface RecipeClickedCallback {
 
 	void onRecipeClicked(Recipe recipe);
 }

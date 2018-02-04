@@ -1,4 +1,4 @@
-package br.com.glima.bakingapp.view;
+package br.com.glima.bakingapp.view.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,6 +10,7 @@ import java.util.List;
 import br.com.glima.bakingapp.R;
 import br.com.glima.bakingapp.business.Recipe;
 import br.com.glima.bakingapp.databinding.RecipeItemBinding;
+import br.com.glima.bakingapp.view.RecipeClickedCallback;
 
 import static android.databinding.DataBindingUtil.inflate;
 import static android.view.LayoutInflater.from;
@@ -18,7 +19,7 @@ import static android.view.LayoutInflater.from;
  * Created by gustavo.lima on 27/01/18.
  */
 
-class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeViewHolder> {
+public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeViewHolder> {
 
 	private List<Recipe> recipes = new ArrayList<>();
 	private RecipeClickedCallback callback;

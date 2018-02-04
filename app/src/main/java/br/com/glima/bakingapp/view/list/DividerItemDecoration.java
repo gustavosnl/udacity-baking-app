@@ -1,4 +1,4 @@
-package br.com.glima.bakingapp.view;
+package br.com.glima.bakingapp.view.list;
 
 import android.content.Context;
 import android.graphics.Rect;

@@ -1,4 +1,4 @@
-package br.com.glima.bakingapp.view;
+package br.com.glima.bakingapp.view.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
@@ -17,7 +17,7 @@ import static android.view.LayoutInflater.from;
  * Created by gustavo.lima on 28/01/18.
  */
 
-class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientViewHolder> {
+public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientViewHolder> {
 
 	private List<Ingredient> ingredients = new ArrayList<>();
 

@@ -1,4 +1,4 @@
-package br.com.glima.bakingapp.view;
+package br.com.glima.bakingapp.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +14,9 @@ import java.util.List;
 import br.com.glima.bakingapp.R;
 import br.com.glima.bakingapp.business.Recipe;
 import br.com.glima.bakingapp.network.RecipesClient;
+import br.com.glima.bakingapp.view.RecipeClickedCallback;
+import br.com.glima.bakingapp.view.list.DividerItemDecoration;
+import br.com.glima.bakingapp.view.list.RecipesAdapter;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 

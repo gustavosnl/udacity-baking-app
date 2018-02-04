@@ -1,4 +1,4 @@
-package br.com.glima.bakingapp.view;
+package br.com.glima.bakingapp.view.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import br.com.glima.bakingapp.R;
 import br.com.glima.bakingapp.business.Recipe;
+import br.com.glima.bakingapp.view.RecipeClickedCallback;
+import br.com.glima.bakingapp.view.fragment.RecipesFragment;
 
 /**
  * Created by gustavo.lima on 27/01/18.

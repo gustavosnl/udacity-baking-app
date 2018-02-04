@@ -1,4 +1,4 @@
-package br.com.glima.bakingapp.view;
+package br.com.glima.bakingapp.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +12,10 @@ import android.view.ViewGroup;
 import br.com.glima.bakingapp.R;
 import br.com.glima.bakingapp.business.Recipe;
 import br.com.glima.bakingapp.databinding.FragmentRecipeDetailBinding;
+import br.com.glima.bakingapp.view.StepClickedCallback;
+import br.com.glima.bakingapp.view.list.DividerItemDecoration;
+import br.com.glima.bakingapp.view.list.IngredientsAdapter;
+import br.com.glima.bakingapp.view.list.StepsAdapter;
 
 import static android.databinding.DataBindingUtil.inflate;
 

@@ -1,4 +1,4 @@
-package br.com.glima.bakingapp.view;
+package br.com.glima.bakingapp.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
