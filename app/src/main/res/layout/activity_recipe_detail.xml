@@ -5,19 +5,62 @@
         <variable name="recipe" type="br.com.glima.bakingapp.business.Recipe"/>
 
     </data>
-    <android.support.constraint.ConstraintLayout android:layout_width="match_parent" android:layout_height="match_parent">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
 
         <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="0dp" android:layout_height="56dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/navContainer"
+            android:layout_width="0dp" android:layout_height="48dp" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:srcCompat="@color/primary_dark"/>
         <FrameLayout
             android:id="@+id/fragment_container"
-            android:layout_width="384dp"
-            android:layout_height="0dp" app:layout_constraintBottom_toTopOf="@+id/imageView4" app:layout_constraintTop_toTopOf="parent" tools:layout_editor_absoluteX="0dp">
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/navContainer"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
 
         </FrameLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/previousStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:onClick="previousStepClicked"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toTopOf="@+id/navContainer" app:layout_constraintStart_toStartOf="@+id/navContainer"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_container"
+            app:srcCompat="@color/accent"/>
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/nextStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" android:layout_marginEnd="16dp" android:layout_marginTop="8dp"
+            android:clickable="true" android:onClick="nextStepClicked" app:fabSize="normal"
+            app:layout_constraintBottom_toTopOf="@+id/navContainer" app:layout_constraintEnd_toEndOf="@+id/navContainer"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_container"
+            app:srcCompat="@color/accent"/>
+        <TextView
+            android:id="@+id/stepLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text=""
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/navContainer"
+            app:layout_constraintEnd_toStartOf="@+id/nextStep"
+            app:layout_constraintStart_toEndOf="@+id/previousStep"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_container"
+            tools:text="1 of 20"/>
     </android.support.constraint.ConstraintLayout>
-
-
 </layout>
