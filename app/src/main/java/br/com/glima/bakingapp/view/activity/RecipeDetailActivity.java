@@ -17,6 +17,10 @@ import br.com.glima.bakingapp.view.StepClickedCallback;
 import br.com.glima.bakingapp.view.fragment.RecipeDetailFragment;
 import br.com.glima.bakingapp.view.fragment.StepDetailFragment;
 
+import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 /**
  * Created by gustavo.lima on 27/01/18.
  */
@@ -25,10 +29,12 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepClick
 
 	private static final String TAG = "fragment_recipe_detail";
 	private RecipeDetailFragment recipeDetailFragment;
+	private StepDetailFragment stepFragment;
 	private ActivityRecipeDetailBinding binding;
 	private int mCurrentStepIndex;
 
 	public static final String RECIPE_INTENT_EXTRA = "recipe_intent_extra";
+	private boolean mTwoPane;
 
 	public static Intent newIntent(Context originContext, Recipe recipe) {
 		Intent intent = new Intent(originContext, RecipeDetailActivity.class);
@@ -42,13 +48,43 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepClick
 
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe_detail);
 
-		recipeDetailFragment = new RecipeDetailFragment();
-		recipeDetailFragment.setRecipe((Recipe) getIntent().getParcelableExtra(RECIPE_INTENT_EXTRA));
+		stepFragment = new StepDetailFragment();
 
-		getSupportFragmentManager().beginTransaction()
-				.add(R.id.fragment_container, recipeDetailFragment, TAG)
-				.addToBackStack(TAG)
-				.commit();
+		if (findViewById(R.id.recipeDetailFragment) != null) {
+			mTwoPane = true;
+			recipeDetailFragment = new RecipeDetailFragment();
+			recipeDetailFragment.setRecipe((Recipe) getIntent().getParcelableExtra(RECIPE_INTENT_EXTRA));
+
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.recipeDetailFragment, recipeDetailFragment, TAG)
+					.addToBackStack(TAG)
+					.commit();
+
+			changeStep(getRecipe().getSteps().get(0));
+
+		} else {
+			binding.nextStep.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					nextStepClicked();
+				}
+			});
+
+			binding.previousStep.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					previousStepClicked();
+				}
+			});
+
+			recipeDetailFragment = new RecipeDetailFragment();
+			recipeDetailFragment.setRecipe((Recipe) getIntent().getParcelableExtra(RECIPE_INTENT_EXTRA));
+
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.fragment_container, recipeDetailFragment, TAG)
+					.addToBackStack(TAG)
+					.commit();
+		}
 	}
 
 	private void displayDetailFragment() {
@@ -61,22 +97,23 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepClick
 	@Override
 	public void onStepClicked(Step step) {
 		mCurrentStepIndex = Integer.valueOf(step.getId());
-		fragmentTransition(step);
+		if (!mTwoPane) {
+			showNavigationControls();
+		}
+		changeStep(step);
 	}
 
-	private void fragmentTransition(Step step) {
-		StepDetailFragment stepDetailFragment = new StepDetailFragment();
-		stepDetailFragment.setStep(step);
+	private void changeStep(Step step) {
+		StepDetailFragment newStepFragment = new StepDetailFragment();
+		newStepFragment.setStep(step);
 
 		getSupportFragmentManager().beginTransaction()
 				.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 				.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
 						android.R.anim.fade_out, android.R.anim.fade_in)
 				.addToBackStack(step.getId())
-				.replace(R.id.fragment_container, stepDetailFragment)
+				.replace(R.id.fragment_container, newStepFragment)
 				.commit();
-
-		showNavigationControls();
 	}
 
 	private Recipe getRecipe() {
@@ -86,38 +123,48 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepClick
 		return null;
 	}
 
-	public void previousStepClicked(View view) {
+	public void previousStepClicked() {
 		if (mCurrentStepIndex == 0) {
 			hideNavigationControls();
 			displayDetailFragment();
 		} else {
 			Step previous = getRecipe().getSteps().get(--mCurrentStepIndex);
-			fragmentTransition(previous);
+			changeStep(previous);
 		}
 	}
 
-	public void nextStepClicked(View view) {
-		Step previous = getRecipe().getSteps().get(++mCurrentStepIndex);
-		fragmentTransition(previous);
+	public void nextStepClicked() {
+		if (mCurrentStepIndex != getRecipe().getSteps().size() - 1) {
+			binding.nextStep.setVisibility(VISIBLE);
+			Step next = getRecipe().getSteps().get(++mCurrentStepIndex);
+			changeStep(next);
+		} else {
+			binding.nextStep.setVisibility(INVISIBLE);
+		}
 	}
 
 	private void showNavigationControls() {
-		binding.navContainer.setVisibility(View.VISIBLE);
-		binding.nextStep.setVisibility(View.VISIBLE);
-		binding.previousStep.setVisibility(View.VISIBLE);
-		binding.stepLabel.setVisibility(View.VISIBLE);
+		if (!mTwoPane) {
+			binding.navContainer.setVisibility(VISIBLE);
+			binding.nextStep.setVisibility(VISIBLE);
+			binding.previousStep.setVisibility(VISIBLE);
+			binding.stepLabel.setVisibility(VISIBLE);
+		}
 	}
 
 	private void hideNavigationControls() {
-		binding.navContainer.setVisibility(View.GONE);
-		binding.nextStep.setVisibility(View.GONE);
-		binding.previousStep.setVisibility(View.GONE);
-		binding.stepLabel.setVisibility(View.GONE);
+		binding.navContainer.setVisibility(GONE);
+		binding.nextStep.setVisibility(GONE);
+		binding.previousStep.setVisibility(GONE);
+		binding.stepLabel.setVisibility(GONE);
 	}
 
 	@Override
 	public void onBackPressed() {
-		super.onBackPressed();
-		previousStepClicked(null);
+		if (mTwoPane) {
+			finish();
+		} else {
+			previousStepClicked();
+		}
 	}
 }

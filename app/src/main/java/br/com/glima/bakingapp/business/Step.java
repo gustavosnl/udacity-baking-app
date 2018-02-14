@@ -1,5 +1,6 @@
 package br.com.glima.bakingapp.business;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -12,29 +13,31 @@ public class Step implements Parcelable {
 	private String id;
 	private String shortDescription;
 	private String description;
-	private String videoUrl;
-	private String thumbnailUrl;
-
+	private String videoURL ="";
+	private String thumbnailURL="";
 
 	protected Step(Parcel in) {
 		id = in.readString();
 		shortDescription = in.readString();
 		description = in.readString();
-		videoUrl = in.readString();
-		thumbnailUrl = in.readString();
+		videoURL = in.readString();
+		thumbnailURL = in.readString();
 	}
+
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(id);
 		dest.writeString(shortDescription);
 		dest.writeString(description);
-		dest.writeString(videoUrl);
-		dest.writeString(thumbnailUrl);
+		dest.writeString(videoURL);
+		dest.writeString(thumbnailURL);
 	}
+
 	@Override
 	public int describeContents() {
 		return 0;
 	}
+
 	public static final Creator<Step> CREATOR = new Creator<Step>() {
 		@Override
 		public Step createFromParcel(Parcel in) {
@@ -49,16 +52,22 @@ public class Step implements Parcelable {
 	public String getId() {
 		return id;
 	}
+
 	public String getShortDescription() {
 		return shortDescription;
 	}
+
 	public String getDescription() {
 		return description;
 	}
-	public String getVideoUrl() {
-		return videoUrl;
+
+	public Uri getMediaUri() {
+		if (!"".equals(videoURL))
+			return Uri.parse(videoURL);
+		return Uri.parse(thumbnailURL);
 	}
-	public String getThumbnailUrl() {
-		return thumbnailUrl;
+
+	public boolean hasMedia() {
+		return !videoURL.isEmpty() || !thumbnailURL.isEmpty();
 	}
 }

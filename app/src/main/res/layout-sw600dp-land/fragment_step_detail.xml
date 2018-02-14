@@ -20,14 +20,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/instructions_label"
+            android:textSize="@dimen/label_text_size"
             app:layout_constraintStart_toStartOf="@+id/videoView"
             app:layout_constraintTop_toBottomOf="@+id/videoView"/>
+
         <TextView
             android:id="@+id/instructions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{step.description}" app:layout_constraintEnd_toEndOf="@+id/videoView"
+            android:text="@{step.description}"
+            android:textSize="@dimen/step_description_text_size"
+            app:layout_constraintEnd_toEndOf="@+id/videoView"
             app:layout_constraintStart_toStartOf="@+id/labelStructions" app:layout_constraintTop_toBottomOf="@+id/labelStructions"/>
 
         <com.google.android.exoplayer2.ui.SimpleExoPlayerView

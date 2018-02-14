@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="list_default_separator">8dp</dimen>
+    <dimen name="label_text_size">18sp</dimen>
+    <dimen name="step_description_text_size">16sp</dimen>
 </resources>

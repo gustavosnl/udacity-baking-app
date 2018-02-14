@@ -53,9 +53,11 @@ public class RecipeDetailFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		Recipe recipe = getArguments().getParcelable(ARGUMENT_RECIPE);
-		ingredients.setAdapter(new IngredientsAdapter(recipe.getIngredients()));
-		steps.setAdapter(new StepsAdapter(recipe.getSteps(), (StepClickedCallback) getContext()));
-		steps.addItemDecoration(new DividerItemDecoration(getContext()));
+		if (getArguments() != null) {
+			Recipe recipe = getArguments().getParcelable(ARGUMENT_RECIPE);
+			ingredients.setAdapter(new IngredientsAdapter(recipe.getIngredients()));
+			steps.setAdapter(new StepsAdapter(recipe.getSteps(), (StepClickedCallback) getContext()));
+			steps.addItemDecoration(new DividerItemDecoration(getContext()));
+		}
 	}
 }
