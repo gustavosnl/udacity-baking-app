@@ -13,6 +13,10 @@ public class Ingredient implements Parcelable {
 	private String measure;
 	private String ingredient;
 
+	public Ingredient(String ingredient) {
+		this.ingredient = ingredient;
+	}
+
 	protected Ingredient(Parcel in) {
 		if (in.readByte() == 0) { quantity = null; } else { quantity = in.readDouble(); }
 		measure = in.readString();

@@ -23,6 +23,8 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 	public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
 		outRect.bottom = mContext.getResources().getDimensionPixelSize(R.dimen.list_default_separator);
 		outRect.top = mContext.getResources().getDimensionPixelSize(R.dimen.list_default_separator);
+		outRect.right = mContext.getResources().getDimensionPixelSize(R.dimen.list_default_separator);
+		outRect.left = mContext.getResources().getDimensionPixelSize(R.dimen.list_default_separator);
 	}
 }
 

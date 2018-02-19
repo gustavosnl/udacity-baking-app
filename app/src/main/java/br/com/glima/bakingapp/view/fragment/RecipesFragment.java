@@ -3,7 +3,7 @@ package br.com.glima.bakingapp.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +37,7 @@ public class RecipesFragment extends Fragment implements Observer<List<Recipe>> 
 		View rootView = inflater.inflate(R.layout.fragment_recipes_list, container, false);
 		recyclerView = rootView.findViewById(R.id.recipes_list);
 		recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
-		recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+		recyclerView.setLayoutManager(new GridLayoutManager(getContext(), getResources().getInteger(R.integer.column_span_count)));
 
 		client = new RecipesClient();
 
