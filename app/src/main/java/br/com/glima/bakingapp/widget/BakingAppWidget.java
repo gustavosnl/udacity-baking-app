@@ -18,10 +18,10 @@ public class BakingAppWidget extends AppWidgetProvider {
 	static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
 								int appWidgetId) {
 
-		CharSequence widgetText = context.getString(R.string.appwidget_text);
+		CharSequence widgetText = context.getString(R.string.appwidget_description);
 		// Construct the RemoteViews object
 		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget);
-		views.setTextViewText(R.id.appwidget_text, widgetText);
+		views.setTextViewText(R.id.appwidget_image, widgetText);
 
 		Intent intent = new Intent(context, MainActivity.class);
 		PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
@@ -45,5 +45,7 @@ public class BakingAppWidget extends AppWidgetProvider {
 	public void onDisabled(Context context) {
 		// Enter relevant functionality for when the last br.com.glima.bakingapp.widget is disabled
 	}
+
+
 }
 

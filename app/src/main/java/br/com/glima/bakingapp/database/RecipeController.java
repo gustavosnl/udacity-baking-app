@@ -19,11 +19,11 @@ import static br.com.glima.bakingapp.provider.IngredientsContentProviderContract
  * Created by gustavo.lima on 15/02/18.
  */
 
-public class RecipeControler {
+public class RecipeController {
 
 	private Context context;
 
-	public RecipeControler(Context context) {
+	public RecipeController(Context context) {
 		this.context = context;
 	}
 
@@ -38,7 +38,7 @@ public class RecipeControler {
 		context.getContentResolver().insert(CONTENT_URI, values);
 	}
 
-	public List<String> getIngredientsByRecipeId(String recipeId) {
+	public List<String> getFavoriteRecipeIngredients(String recipeId) {
 
 		List<String> ingredients = new ArrayList<>();
 		Cursor cursor = context.getContentResolver().query(CONTENT_URI, null, null, null, null);
@@ -47,7 +47,7 @@ public class RecipeControler {
 			cursor.moveToFirst();
 
 			while (!cursor.isAfterLast()) {
-				ingredients.add(cursor.getString(cursor.getColumnIndex(COLUMN_INGREDIENT_NAME));
+				ingredients.add(cursor.getString(cursor.getColumnIndex(COLUMN_INGREDIENT_NAME)));
 				cursor.moveToNext();
 			}
 			cursor.close();
@@ -55,9 +55,31 @@ public class RecipeControler {
 		return ingredients;
 	}
 
-	public void removeMovi(String movieId) {
-		Uri DELETE_URI = CONTENT_URI.buildUpon().appendPath(movieId).build();
+	public void removeRecipe(String recipeId) {
+		Uri DELETE_URI = CONTENT_URI.buildUpon().appendPath(recipeId).build();
 
 		context.getContentResolver().delete(DELETE_URI, null, null);
+	}
+	public List<String> getFavoriteRecipeIngredients() {
+		List<String> ingredients = new ArrayList<>();
+		Cursor cursor = context.getContentResolver().query(CONTENT_URI, null, null, null, null);
+
+		if (cursor != null) {
+			cursor.moveToFirst();
+
+			while (!cursor.isAfterLast()) {
+				ingredients.add(cursor.getString(cursor.getColumnIndex(COLUMN_INGREDIENT_NAME)));
+				cursor.moveToNext();
+			}
+			cursor.close();
+		}
+		return ingredients;
+	}
+
+	public boolean isFavorite(String recipeId) {
+		Uri IS_FAVORITE_URI = CONTENT_URI.buildUpon().appendPath(recipeId).build();
+
+		Cursor cursor = context.getContentResolver().query(IS_FAVORITE_URI, null, null, null, null);
+		return cursor.moveToNext();
 	}
 }

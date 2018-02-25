@@ -8,6 +8,8 @@
         <item quantity="one">%1$.1f %2$s</item>
         <item quantity="other">%1$.1f %2$ss</item>
     </plurals>
-    <string name="appwidget_text">EXAMPLE</string>
+    <string name="appwidget_description">App widget</string>
     <string name="add_widget">Add widget</string>
+    <string name="empty_recipe_list_text">No recipes favorited yet</string>
+    <string name="menu_favorite_description">Favorite</string>
 </resources>

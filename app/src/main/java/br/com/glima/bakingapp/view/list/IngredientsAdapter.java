@@ -1,5 +1,6 @@
 package br.com.glima.bakingapp.view.list;
 
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -34,6 +35,11 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 	@Override
 	public void onBindViewHolder(IngredientViewHolder holder, int position) {
 		holder.bindIngredient(ingredients.get(position));
+	}
+
+	public void addIngredients(List<Ingredient> ingredients) {
+		this.ingredients.addAll(ingredients);
+		notifyDataSetChanged();
 	}
 
 	@Override

@@ -7,11 +7,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import br.com.glima.bakingapp.R;
 import br.com.glima.bakingapp.business.Recipe;
 import br.com.glima.bakingapp.business.Step;
+import br.com.glima.bakingapp.database.RecipeController;
 import br.com.glima.bakingapp.databinding.ActivityRecipeDetailBinding;
 import br.com.glima.bakingapp.view.StepClickedCallback;
 import br.com.glima.bakingapp.view.fragment.RecipeDetailFragment;
@@ -29,7 +33,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepClick
 
 	private static final String TAG = "fragment_recipe_detail";
 	private RecipeDetailFragment recipeDetailFragment;
-	private StepDetailFragment stepFragment;
+	private RecipeController recipeController;
 	private ActivityRecipeDetailBinding binding;
 	private int mCurrentStepIndex;
 
@@ -45,10 +49,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepClick
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		recipeController = new RecipeController(this);
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_recipe_detail);
-
-		stepFragment = new StepDetailFragment();
 
 		if (findViewById(R.id.recipeDetailFragment) != null) {
 			mTwoPane = true;
@@ -160,11 +162,42 @@ public class RecipeDetailActivity extends AppCompatActivity implements StepClick
 	}
 
 	@Override
-	public void onBackPressed() {
-		if (mTwoPane) {
-			finish();
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.recipe_detail_menu, menu);
+		setUpFavoriteMenuItem(menu.findItem(R.id.favorite));
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.favorite:
+				UpdateFavoriteMenuItem(item);
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	private void setUpFavoriteMenuItem(MenuItem favoriteItem) {
+		if (isFavorite()) {
+			favoriteItem.setIcon(R.drawable.ic_favorite_filled);
 		} else {
-			previousStepClicked();
+			favoriteItem.setIcon(R.drawable.ic_favorite_stroke);
+		}
+	}
+	private boolean isFavorite() {
+		return recipeController.isFavorite(getRecipe().getId());
+	}
+
+	private void UpdateFavoriteMenuItem(MenuItem favoriteItem) {
+		if (isFavorite()) {
+			favoriteItem.setIcon(R.drawable.ic_favorite_stroke);
+			recipeController.removeRecipe(getRecipe().getId());
+		} else {
+			favoriteItem.setIcon(R.drawable.ic_favorite_filled);
+			recipeController.addRecipe(getRecipe());
 		}
 	}
 }
+

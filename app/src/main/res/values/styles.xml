@@ -8,5 +8,18 @@
         <item name="colorAccent">@color/accent</item>
 
     </style>
+    <style name="RecipeDetailItem">
+        <item name="android:minHeight">@dimen/detail_item_min_height</item>
+        <item name="android:background">@drawable/step_bg</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/detail_item_text_size</item>
+        <item name="android:padding">@dimen/detail_item_padding</item>
+        <item name="android:textColor">@color/primary_dark</item>
+
+    </style>
 
 </resources>
